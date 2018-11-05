@@ -1,0 +1,23 @@
+* render component: 
+    <componentName />
+
+* transfer data from parent component to child component:
+    <Word wordInfo={word} key={word._id}/>
+
+    const { en, vn, isMemoried } = this.props.wordInfo;
+
+* state: 
+    constructor(props) {
+        super(props);
+        this.state = { count: 1 } // variable count
+    }
+
+* onclick and set state
+    <button 
+        className="btn btn-success"
+        onClick = {() => {
+            this.setState(prevState => ({count: prevState.count + 1}))
+        }}
+    >
+        Increase
+    </button>
