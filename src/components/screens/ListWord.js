@@ -13,7 +13,9 @@ export class ListWord extends Component {
                 { _id: 'c', en: 'Three', vn: 'Ba', isMemoried: true }
             ],
             txtEn: '',
-            txtVn: ''
+            txtVn: '',
+            shouldShowForm: false,
+            filterMode: 'SHOW_ALL'
         }
     }
 
@@ -33,6 +35,9 @@ export class ListWord extends Component {
     }
 
     genWord(word) {
+        const { filterMode } = this.state;
+        const shouldShowWord = filterMode === 'SHOW_ALL' || (filterMode === 'SHOW_FORGOT' && !word.isMemoried) || (filterMode === 'SHOW_MEMORIZED' && word.isMemoried)
+        if (!shouldShowWord) return null;
         const engClassName = word.isMemoried ? 'text-success' : 'text-danger';
         return (
             <div key={word._id}>
@@ -71,13 +76,29 @@ export class ListWord extends Component {
         this.setState(prevState => ({
             words: prevState.words.concat(word),
             txtEn: '',
-            txtVn: ''
+            txtVn: '',
+            shouldShowForm: false
         }))
     }
 
-    render() {
+    getForm() {
+        if (!this.state.shouldShowForm) {
+            return (
+                <div>
+                    <button
+                        className="btn btn-success"
+                        onClick={() => this.setState({
+                            shouldShowForm: true
+                        })}
+                    >
+                        Add new word
+                    </button>
+                </div>
+            )
+        }
+
         return (
-            <div className="form-group" style={{ width: '200px' }}>
+            <div>
                 <input
                     type="text"
                     className="form-control"
@@ -97,8 +118,41 @@ export class ListWord extends Component {
                     className='btn btn-success'
                     onClick={this.addWord.bind(this)}
                 >
-                    Add
+                    Add Word
                 </button>
+
+                <button
+                    className="btn btn-warning"
+                    onClick={() => this.setState({
+                            shouldShowForm: false
+                        })
+                    }
+                >
+                    Cancel
+                </button>
+            </div>
+        )
+    }
+
+    render() {
+        return (
+            <div className="form-group" style={{ width: '200px' }}>
+                <select
+                    className="form-control"
+                    value={this.state.filterMode}
+                    onChange={evt => this.setState({
+                            filterMode: evt.target.value
+                        })
+                    }
+                >
+                    <option value="SHOW_ALL">SHOW ALL</option>
+                    <option value="SHOW_FORGOT">SHOW FORGOT</option>
+                    <option value="SHOW_MEMORIZED">SHOW MEMORIZED</option>
+                </select>
+
+                <br />
+
+                {this.getForm()}
 
                 {/* { arr.map(word => <Word wordInfo={word} key={word._id}/>) } */}
                 {/* { arr.map(word => this.getWord(word)) } */}
