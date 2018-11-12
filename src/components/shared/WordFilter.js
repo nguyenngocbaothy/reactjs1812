@@ -8,6 +8,7 @@ export class WordFilterComponent extends Component {
             <select
                 className="form-control"
                 value={this.props.filterMode}
+                onChange={evt => this.props.dispatch({type: 'SET_FILTER_MODE', filterMode: evt.target.value})}
             >
                 <option value="SHOW_ALL">SHOW ALL</option>
                 <option value="SHOW_FORGOT">SHOW FORGOT</option>

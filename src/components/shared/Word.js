@@ -5,11 +5,12 @@ class WordComponent extends Component {
     state = {  }
 
     getButton() {
+        const toggleWord = () => {this.props.dispatch({type: 'TOGGLE_WORD', _id: this.props.wordInfo._id})}
         if (this.props.wordInfo.isMemoried) {
-            return <button className="btn btn-warning">Forgot</button>;
+            return <button className="btn btn-warning" onClick={toggleWord}>Forgot</button>;
         }
 
-        return <button className="btn btn-success">Memoried</button>;
+        return <button className="btn btn-success" onClick={toggleWord}>Memoried</button>;
     }
 
     get shouldShowWord() {
@@ -21,7 +22,7 @@ class WordComponent extends Component {
 
     render() {
         if (!this.shouldShowWord) return null;
-        const { en, vn, isMemoried } = this.props.wordInfo;
+        const { en, vn, isMemoried, _id } = this.props.wordInfo;
         const engClassName = isMemoried ? 'text-success' : 'text-danger';
         return (
             <div>
@@ -29,7 +30,10 @@ class WordComponent extends Component {
                     { en }
                 </h3>
                 <p>{ vn }</p>
-                <button className="btn btn-danger">
+                <button 
+                    className="btn btn-danger"
+                    onClick={evt => this.props.dispatch({type: 'REMOVE_WORD', _id})}
+                >
                     Remove
                 </button>
                 { this.getButton() }

@@ -8,14 +8,29 @@ class WordFormComponent extends Component {
             txtEn: '',
             txtVn: ''
         }
+        this.addWord = this.addWord.bind(this);
+    }
+
+    addWord() {
+        const { txtEn, txtVn } = this.state;
+        const word = {
+            _id: Math.random() + '',
+            en: txtEn,
+            vn: txtVn,
+            isMemorized: false
+        };
+        this.props.dispatch({type: 'ADD_WORD', word})
+        this.setState({txtEn: '', txtVn: ''});
     }
 
     render() {
-        if (!this.props.shouldShowForm) {
+        const { dispatch, shouldShowForm } = this.props;
+        if (!shouldShowForm) {
             return (
                 <div>
                     <button
                         className="btn btn-success"
+                        onClick={() => dispatch({type: 'TOGGLE_FORM'})}
                     >
                         Add new word
                     </button>
@@ -40,13 +55,14 @@ class WordFormComponent extends Component {
             <br />
             <button
                 className='btn btn-success'
+                onClick={this.addWord}
             >
                 Add Word
             </button>
 
             <button
                 className="btn btn-warning"
-
+                onClick={() => dispatch({type: 'TOGGLE_FORM'})}
             >
                 Cancel
             </button>

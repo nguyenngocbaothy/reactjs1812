@@ -43,3 +43,6 @@
     import { connect } from 'react-redux';
 
     export const ListWord = connect(state => ({words: state.word}))(ListWordComponent)
+
+* get value Input
+    onChange={evt => this.setState({ txtVn: evt.target.value })}    
