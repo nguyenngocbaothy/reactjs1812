@@ -21,3 +21,25 @@
     >
         Increase
     </button>
+
+* set store
+    import { combineReducers, createStore } from 'redux'
+
+    function shouldShowFormReducer(state = false, action) {
+        return state;
+    }   
+
+    ...
+
+    const reducer = combineReducers({
+        word: wordReducer,
+        shouldShowForm: shouldShowFormReducer,
+        filterMode: filterModeReducer
+    })
+
+    export const store = createStore(reducer); 
+
+* get store
+    import { connect } from 'react-redux';
+
+    export const ListWord = connect(state => ({words: state.word}))(ListWordComponent)

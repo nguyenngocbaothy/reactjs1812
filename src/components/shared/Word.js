@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export class Word extends Component {
+class WordComponent extends Component {
     state = {  }
 
     getButton() {
@@ -11,7 +12,15 @@ export class Word extends Component {
         return <button className="btn btn-success">Memoried</button>;
     }
 
+    get shouldShowWord() {
+        const { filterMode, wordInfo } = this.props;
+        if (filterMode === 'SHOW_ALL') return true;
+        if (filterMode === 'SHOW_FORGOT') return !wordInfo.isMemoried;
+        return wordInfo.isMemoried;
+    }
+
     render() {
+        if (!this.shouldShowWord) return null;
         const { en, vn, isMemoried } = this.props.wordInfo;
         const engClassName = isMemoried ? 'text-success' : 'text-danger';
         return (
@@ -20,9 +29,15 @@ export class Word extends Component {
                     { en }
                 </h3>
                 <p>{ vn }</p>
-
+                <button className="btn btn-danger">
+                    Remove
+                </button>
                 { this.getButton() }
             </div>      
         );
     }
 }
+
+const mapStates = state => ({filterMode: state.filterMode})
+
+export const Word = connect(mapStates)(WordComponent) 
