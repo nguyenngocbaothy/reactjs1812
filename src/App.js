@@ -5,24 +5,16 @@ import { ListWord } from './components/screens/ListWord';
 // import { StateExam } from './components/screens/StateExam';
 // import { MyInput } from './components/screens/MyInput';
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store'
+
 
 class App extends Component {
-  // render() {
-  //   const word1 = { en: 'One', vn: 'Mot', isMemoried: true };
-  //   const word2 = { en: 'Two', vn: 'Hai', isMemoried: false };
-  //   const word3 = { en: 'Three', vn: 'Ba', isMemoried: true };
-  //   return (
-  //     <div className="App">
-  //       <Word wordInfo={word1}/>
-  //       <Word wordInfo={word2}/>
-  //       <Word wordInfo={word3}/>
-  //     </div>
-  //   );
-  // }
-
   render() {
     return (
-      <ListWord />
+      <Provider store={store}>
+        <ListWord />
+      </Provider>
     );
   }  
 }
