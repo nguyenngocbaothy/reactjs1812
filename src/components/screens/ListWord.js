@@ -4,7 +4,15 @@ import { Word } from '../shared/Word';
 import { WordForm } from '../shared/WordForm';
 import { WordFilter } from '../shared/WordFilter';
 
+import axios from 'axios';
+
 class ListWordComponent extends Component {
+
+    componentDidMount() {
+        axios.get('https://word1203.herokuapp.com/word')
+        .then(response => response.data)
+        .then(res => console.log(res));
+    }
 
     // constructor(props) {
     //     super(props);

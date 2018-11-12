@@ -46,3 +46,21 @@
 
 * get value Input
     onChange={evt => this.setState({ txtVn: evt.target.value })}    
+
+* axios
+    GET: 
+    componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
+      .then(res => {
+        const persons = res.data;
+        this.setState({ persons });
+      })
+    }
+
+    POST:
+    axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+    .then(res => {
+        console.log(res);
+        console.log(res.data);
+    })
+
